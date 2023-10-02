@@ -331,7 +331,7 @@ def main(course, label_type, n_feature_weeks=4, out_dir="/temp-data"):
     temp_dir = "/temp-data/{}/".format(course)
     # forumfile = "{0}forum_posts.csv".format(temp_dir)
     # commentfile = "{0}forum_comments.csv".format(temp_dir)
-    #dgfhsf
+    
     assignmentfile = "{0}assignments.csv".format(temp_dir)
     datefile = "{0}coursera_course_dates_with_underscore.csv".format("/morf-data/")
     course_start, course_end = fetch_start_end_date(course, datefile)
