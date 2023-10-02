@@ -1,0 +1,86 @@
+SELECT
+  CASE
+    WHEN achievement_level = 'normal' THEN normal_grade
+    WHEN achievement_level = 'distinction' THEN distinction_grade
+    ELSE NULL
+  END AS grade,
+  COUNT(*) AS count
+FROM
+  course_grades
+WHERE
+  authenticated_overall IS NOT NULL
+GROUP BY
+  grade
+ORDER BY
+  grade ASC;
+
+
+SELECT 
+  SUM(
+    LENGTH(post_text) - LENGTH(REPLACE(post_text, ' ', '')) + 1
+  ) AS word_count
+FROM 
+  forum_posts;
+
+
+SELECT 
+  user_id, 
+  SUM(
+    LENGTH(post_text) - LENGTH(REPLACE(post_text, ' ', '')) + 1
+  ) AS word_count
+FROM 
+  forum_posts
+GROUP BY 
+  user_id;
+
+
+
+SELECT 
+  YEAR(FROM_UNIXTIME(post_time)) AS post_year, 
+  SUM(
+    LENGTH(post_text) - LENGTH(REPLACE(post_text, ' ', '')) + 1
+  ) AS word_count
+FROM 
+  forum_posts
+GROUP BY 
+  post_year;
+
+
+
+
+
+SELECT 
+  DATE_FORMAT(FROM_UNIXTIME(post_time), '%Y-%m') AS post_month, 
+  SUM(
+    LENGTH(post_text) - LENGTH(REPLACE(post_text, ' ', '')) + 1
+  ) AS word_count
+FROM 
+  forum_posts
+GROUP BY 
+  post_month;
+
+
+
+
+SELECT 
+  SUBSTRING_INDEX(SUBSTRING_INDEX(post_text, ' ', n), ' ', -1) AS word, 
+  COUNT(*) AS count
+FROM 
+  forum_posts
+  JOIN (
+    SELECT 1 + units.i + tens.i * 10 AS n
+    FROM 
+      (SELECT 0 AS i UNION SELECT 1 UNION SELECT 2 UNION SELECT 3 UNION SELECT 4 UNION SELECT 5 
+       UNION SELECT 6 UNION SELECT 7 UNION SELECT 8 UNION SELECT 9) units,
+      (SELECT 0 AS i UNION SELECT 1 UNION SELECT 2 UNION SELECT 3 UNION SELECT 4 UNION SELECT 5 
+       UNION SELECT 6 UNION SELECT 7 UNION SELECT 8 UNION SELECT 9) tens
+    ORDER BY 
+      n
+  ) AS numbers
+  ON CHAR_LENGTH(post_text) - CHAR_LENGTH(REPLACE(post_text, ' ', '')) >= n - 1
+GROUP BY 
+  word
+ORDER BY 
+  count DESC
+LIMIT 
+  10;

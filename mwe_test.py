@@ -1,0 +1,16 @@
+# pip install morf-job-api
+# pip install requests
+
+import morfjobapi as morf
+
+BACKEND_URL = 'https://morf-pcla.education/api/jobs'
+JOB_ZIP_FILE_LOCATION = '/Users/tanvigupta/Desktop/MORF/morf-job-mwe.zip'
+API_KEY = 'eJIcO8IiUZnII3D6BSe0nYGW5cIAcbKB3v+TdqUwRtH66FDnh3QBzvXFGO+jd66TFpp7gM5CQIQ0CXqJn57Rq1fRewVECil1mbetoHcGDz0qM8EwjagOPRaOF37uXfk/raYnQ7IldIwITUcCL9oZ50HTjRZ2PT74iNkz7Rf3eMeSehvmBsYs0rOixayQBHgBJLWFsj9DmvnVPOuYTE4tabjjGzkQAYT3qFozfmAZQjDMpD127XEIsd+mzMIOCWqzL9sUYQtCPlleBB/iBO9lB/SyUk6JpDjZEnNybWW1UxMWYwcZZAGDWQC5Z2plZnvM1wyJMlmXELr5eu/8FcEw3lbnZGERmJE5eA+bQL9H307eBpNgjjubpTt8sEkmwgjYJtl5f6baW7ziNHQxifeoiqcnPkJCLkUBurZ8CCxwSvfaoJ5U+wR66n8qJrOk8uQxv3p4oYehbh/4Zvs5aulnGiTJlEis6hLsBsaxzeuQPQ8JtQRn6/eO2H+UfHvIbtRbUBZQEKr+4eH9GzqICgKjBMqKBD3dG65Ssg5gCkBk0HN8DoVlkmBFIH9UPDf5Esi/WGCBfqPJ1XvrzEeantPKm4CNXqr9Nf/+kTjQ9tHwUm34Wc2cY5MD5Y9P9NOa87EjbHdsEiOAX0xgI+VfexjunEtBugkRA5k0RnI62Xgdh8c='
+job_config = {
+ 'job_zip_file': JOB_ZIP_FILE_LOCATION,
+ 'morf_api_endpoint': BACKEND_URL,
+ 'api_key': API_KEY
+}
+
+morf.submit_job(job_config)
+
