@@ -253,10 +253,7 @@ def extract_assignments(assignments, users, course_start, course_end):
     #     assignment_list, columns=["userID", "week", "assignments"]
     # ).set_index("userID")
 
-  
-
-    df = pd.read_csv (assignments)
-            
+    df = pd.read_csv(assignments)
 
     return df
 

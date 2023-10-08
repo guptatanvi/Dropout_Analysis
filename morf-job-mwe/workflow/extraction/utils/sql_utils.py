@@ -46,7 +46,7 @@ def extract_coursera_sql_data(course, forum_comment_filename="forum_comments.csv
     """
     logging.basicConfig(filename='/output/logs.log', level=logging.DEBUG)
     # query = """SELECT thread_id , post_time , b.session_user_id FROM forum_comments as a LEFT JOIN hash_mapping as b ON a.user_id = b.user_id WHERE a.is_spam != 1 ORDER BY post_time;"""
-    # subprocess.call("mkdir -p " + "/temp-data/" + course, shell=True)
+    subprocess.call("mkdir -p " + "/temp-data/" + course, shell=True)
     # forum_comments = execute_mysql_query(query, course)
     # df = pd.DataFrame(list(forum_comments[3]), columns=forum_comments[0:3])
     # df.to_csv(os.path.join(
@@ -59,18 +59,18 @@ def extract_coursera_sql_data(course, forum_comment_filename="forum_comments.csv
     #     "/temp-data/" + course + '/', forum_post_filename), index=False)
     
     query = """
-SELECT
-hm.session_user_id AS userID,
-a.submission_time,
-COALESCE (COUNT(a.raw_score), 0) AS number_of_attempts,
-AVG(a.raw_score) AS avg_raw_score,
-MAX(a.raw_score) AS max_raw_score,
-MIN(a.raw_score) AS min_raw_score
-FROM hash_mapping hm
-LEFT JOIN assignment_submission_metadata as a ON hm.session_user_id = a.session_user_id
-GROUP BY hm.session_user_id
-ORDER BY number_of_attempts DESC
-"""
+            SELECT
+            hm.session_user_id AS userID,
+            a.submission_time,
+            COALESCE (COUNT(a.raw_score), 0) AS number_of_attempts,
+            AVG(a.raw_score) AS avg_raw_score,
+            MAX(a.raw_score) AS max_raw_score,
+            MIN(a.raw_score) AS min_raw_score
+            FROM hash_mapping hm
+            LEFT JOIN assignment_submission_metadata as a ON hm.session_user_id = a.session_user_id
+            GROUP BY hm.session_user_id
+            ORDER BY number_of_attempts DESC
+            """
     
     assignments = execute_mysql_query(query, course)
     df = pd.DataFrame(list(assignments[6]), columns=assignments[0:6])
